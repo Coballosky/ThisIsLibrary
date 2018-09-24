@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="323.0" prefWidth="529.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text layoutX="12.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre Libro" />
+      <Text layoutX="14.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Categoria" />
+      <Text layoutX="14.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estado" />
+      <TextField layoutX="115.0" layoutY="25.0" />
+      <MenuButton layoutX="115.0" layoutY="63.0" mnemonicParsing="false" text="MenuButton">
+        <items>
+          <MenuItem mnemonicParsing="false" text="MAT" />
+          <MenuItem mnemonicParsing="false" text="HIS" />
+            <MenuItem mnemonicParsing="false" text="FIS" />
+            <MenuItem mnemonicParsing="false" text="PRO" />
+            <MenuItem mnemonicParsing="false" text="ECO" />
+        </items>
+      </MenuButton>
+      <RadioButton layoutX="115.0" layoutY="104.0" mnemonicParsing="false" text="Nuevo" />
+      <Text layoutX="14.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autor" />
+      <TextField layoutX="115.0" layoutY="136.0" />
+      <Text layoutX="12.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo" />
+      <MenuButton layoutX="115.0" layoutY="180.0" mnemonicParsing="false" text="MenuButton">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </MenuButton>
+   </children>
+</AnchorPane>

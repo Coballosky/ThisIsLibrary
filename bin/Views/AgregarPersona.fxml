@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="255.0" prefWidth="401.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <Pane prefHeight="258.0" prefWidth="566.0">
+         <children>
+            <Label layoutX="16.0" layoutY="74.0" text="Nombre" />
+            <Label layoutX="16.0" layoutY="116.0" text="Apellido" />
+            <Label layoutX="16.0" layoutY="29.0" text="Rut" />
+            <Label layoutX="210.0" layoutY="29.0" text="-" />
+            <TextField layoutX="92.0" layoutY="69.0" />
+            <TextField layoutX="92.0" layoutY="111.0" />
+            <TextField layoutX="82.0" layoutY="24.0" prefHeight="31.0" prefWidth="116.0" />
+            <TextField layoutX="227.0" layoutY="24.0" prefHeight="31.0" prefWidth="40.0" />
+            <TextField layoutX="92.0" layoutY="155.0" />
+            <TextField layoutX="92.0" layoutY="198.0" />
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="307.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true" />
+            <Button layoutX="407.0" layoutY="198.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="127.0" text="Button" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

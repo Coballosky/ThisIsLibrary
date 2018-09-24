@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="smbAgregar" prefHeight="397.0" prefWidth="565.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MenuController">
+   <children>
+      <Text fontSmoothingType="LCD" layoutX="27.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to Resource Manager" textAlignment="CENTER">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnExit" layoutX="248.0" layoutY="333.0" mnemonicParsing="false" onAction="#exit" prefHeight="39.0" prefWidth="70.0" text="Salir" />
+      <Text layoutX="27.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="¿Que desea hacer?" wrappingWidth="199.93310546875">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </Text>
+      <SplitMenuButton fx:id="smbAdd" layoutX="53.0" layoutY="125.0" mnemonicParsing="false" onAction="#agregarLibro" text="Agregar">
+        <items>
+          <MenuItem fx:id="mbLibro" mnemonicParsing="false" onAction="#slLibro" onMenuValidation="#agregarLibro" text="Libro" />
+          <MenuItem fx:id="mbConsulta" mnemonicParsing="false" text="Consulta" />
+        </items>
+      </SplitMenuButton>
+   </children>
+</AnchorPane>
