@@ -28,6 +28,7 @@ public class SqlConection {
 		this.url = bufferedReader.readLine();
 		this.username = bufferedReader.readLine();
 		this.password = bufferedReader.readLine();
+		bufferedReader.close();
 	}
 	
 	public void CreateConnection () throws IOException {

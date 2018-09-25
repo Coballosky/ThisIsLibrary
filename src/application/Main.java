@@ -51,7 +51,7 @@ public class Main extends Application {
 	
 	public void SetupSQL() throws IOException {
 		SqlConection SQL = new SqlConection();
-		File tmpDir = new File(path);
+		File tmpDir = new File(this.path);
 		if (tmpDir.exists()) {
 			SQL.LoadConData();
 		}else {
