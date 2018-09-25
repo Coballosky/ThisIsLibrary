@@ -4,10 +4,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import Controllers.MainController;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -18,9 +14,13 @@ import ConnectionHandler.SqlConection;
 
 
 public class Main extends Application {
+	
+	
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		SetupSQL();
+	
+
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/Views/Login.fxml"));
 			Scene scene = new Scene(root);
