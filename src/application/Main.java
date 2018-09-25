@@ -8,7 +8,6 @@ import javafx.scene.Scene;
 import java.io.File;
 import java.io.IOException;
 
-import Comun.Metodos;
 import ConnectionHandler.SqlConection;
 
 /**
@@ -51,7 +50,6 @@ public class Main extends Application {
 	}
 	
 	public void SetupSQL() throws IOException {
-		Metodos Met = new Metodos();
 		SqlConection SQL = new SqlConection();
 		File tmpDir = new File(path);
 		if (tmpDir.exists()) {
