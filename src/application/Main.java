@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 import Comun.Metodos;
 import ConnectionHandler.SqlConection;
+import Comun.Setup;
 
 /**
  * 
@@ -25,13 +26,17 @@ import ConnectionHandler.SqlConection;
  */
 
 public class Main extends Application {
-	private String path = "c://POO//SqlData.txt" ,path_Persona = "c://POO//Persona.txt";
+	private String path = "c://POO//SqlData.txt" ,path_Persona = "c://POO//Persona.txt",mainPath = "c://POO";
 	Metodos met = new Metodos();
 	
 	@Override
 	public void start(Stage primaryStage) throws IOException, SQLException {
-		SetupSQL();			// se verifica que se hayan ingresado los datos de la sql anteriormente, sino se piden
-		DescargaSQL();		// se descarga la base de datos para hacer uso de archivos ( requerimiento entrega 1 )
+		Setup set = new Setup();
+		set.SetupCarpeta();		// Verifica carpeta del programa , sino existe la crea.
+		set.SetupSql();			// se verifica que se hayan ingresado los datos de la sql anteriormente, sino se piden.
+		DescargaSQL();			// se descarga la base de datos para hacer uso de archivos ( requerimiento entrega 1 ).
+		
+
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/Views/Login.fxml"));
 			Scene scene = new Scene(root);
@@ -45,10 +50,6 @@ public class Main extends Application {
 	
 	public void closeLogin(Stage primaryStage) {
 		primaryStage.close();
-	}
-	
-	public static void main(String[] args) {
-		launch(args);
 	}
 	
 	
@@ -69,23 +70,6 @@ public class Main extends Application {
 			} catch (SQLException | IOException ex) {
 				met.ShowException(ex);
 			}
-		}
-	}
-	
-	
-	public void SetupSQL() {
-		File tmpDir = new File(this.path);
-		if (!tmpDir.exists()) {
-			try {
-				Stage ventanaSQL = new Stage();
-				Parent sql = FXMLLoader.load(getClass().getResource("/Views/ConfigSQL.fxml"));
-				Scene escena = new Scene(sql);
-				escena.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-				ventanaSQL.setScene(escena);
-				ventanaSQL.showAndWait();
-				}catch(Exception ex) {
-				  met.ShowException(ex);
-				}
 		}
 	}
 }

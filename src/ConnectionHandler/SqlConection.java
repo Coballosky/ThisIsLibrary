@@ -1,6 +1,7 @@
 package ConnectionHandler;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,6 +24,7 @@ public class SqlConection {
 	public Statement st;
 	private String dbPersonas = "Persona";
 	private boolean debug = true;
+	private String path_Persona = "c://POO//Persona.txt";
 	
 	public void LoadConData() throws IOException {
 		System.out.println("Cargando sql data");
@@ -80,7 +82,7 @@ public class SqlConection {
 			
 		}
 		CloseConnection();	writer.close();
-}
+	}
 	
 	public boolean TestSqlCon() {
 		try {
@@ -96,53 +98,26 @@ public class SqlConection {
 		}
 
 	}
-	public void PedirListadoPersonas() throws SQLException, IOException {
-			
-			CreateConnection();
-			String sql = "Select * from "+dbPersonas;
-			ResultSet rs = preguntaSql(sql);
-			System.out.println("Query exitoso");
-			String sexo,nombre,apellido,nv,mail;
-			int rut;
-			
-			PrintWriter writer = new PrintWriter("c://POO//Persona.txt");
-			while (rs.next()) {
-				nombre = rs.getString("Nombre");
-				apellido = rs.getString("Apellido");
-				rut = rs.getInt("Rut");
-				nv = rs.getString("NumVer");
-				sexo = rs.getString("Sexo");
-				mail = rs.getString("Mail");
-				writer.println(rut+"-"+nv+","+nombre+","+apellido+","+sexo+","+mail);
-				System.out.println(nombre+" "+apellido+" Rut : "+rut+"-"+nv+" Sexo : "+sexo);
 
-				
-			}
-			writer.close();
-			CloseConnection();
-		
-	}
 	
-	public void DescargarData(String path) throws IOException, SQLException {
-		CreateConnection();
-		
-		String sql = "Select * from "+dbPersonas;
-		ResultSet rs = preguntaSql(sql);
-		System.out.println("Query exitoso");
-		String sexo,nombre,apellido,nv,mail;
-		int rut;
-		
-		PrintWriter writer = new PrintWriter("c://POO//Persona.txt");
-		while (rs.next()) {
-			nombre = rs.getString("Nombre");
-			apellido = rs.getString("Apellido");
-			rut = rs.getInt("Rut");
-			nv = rs.getString("NumVer");
-			sexo = rs.getString("Sexo");
-			mail = rs.getString("Mail");
-			writer.println(rut+"-"+nv+","+nombre+","+apellido+","+sexo+","+mail);
-		}
-		writer.close();CloseConnection();
+
+	
+	public void DescargaData() {
+		try {
+			DescargarPersonas();
+			
+			
+			
+				/*
+				 * TODO: AGREGAR LAS DESCARGAS DE TODA LA DATA QUE OCUPARA EL PROGRAMA 
+				 */
+			
+			
+			
+			
+			} catch (SQLException | IOException ex) {
+				met.ShowException(ex);
+			}
 		
 	}
 	
