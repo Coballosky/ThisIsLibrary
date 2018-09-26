@@ -6,17 +6,20 @@ public class Persona {
 	private String rut;
 	private String nombres;
 	private String apellidos;
+	private char sexo;
 	
 	//Constructores
 	public Persona() {
 		rut = null;
 		nombres = null;
 		apellidos = null;
+		sexo = ' ';
 	}
-	public Persona(String rut, String nombres, String apellidos) {
+	public Persona(String rut, String nombres, String apellidos, char sexo) {
 		this.rut = rut;
 		this.nombres = nombres;
 		this.apellidos = apellidos;
+		this.sexo = sexo;
 	}
 	
 	//Getter & Setter
@@ -38,9 +41,17 @@ public class Persona {
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
+	public char getSexo() {
+		return sexo;
+	}
+	public void setSexo(char sexo) {
+		this.sexo = sexo;
+	}
+	
 	//Metodos
 	public String infoPersona() {
-		String info = "RUT: " + getRut() + "\nNombre: " + getNombres() + " " + getApellidos();
+		String info = "RUT: " + getRut() + "\nNombre: " + getNombres() + " " + getApellidos() + " [" 
+				+ getSexo() + "]";
 		
 		return info;
 	}

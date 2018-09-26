@@ -4,15 +4,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import Controllers.MainController;
-
-
 import java.io.File;
 import java.io.IOException;
-
-import Comun.Metodos;
 import ConnectionHandler.SqlConection;
 
 
@@ -41,7 +34,7 @@ public class Main extends Application {
 	}
 	
 	public void SetupSQL() throws IOException {
-		Metodos Met = new Metodos();
+		//Metodos Met = new Metodos();
 		SqlConection SQL = new SqlConection();
 		File tmpDir = new File("c://POO//SqlData.txt");
 		if (tmpDir.exists()) {
