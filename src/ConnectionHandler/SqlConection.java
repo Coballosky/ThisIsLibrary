@@ -85,10 +85,9 @@ public class SqlConection {
 	public boolean TestSqlCon() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			if (this.url == null | this.username == null | this.password == null) { LoadConData();System.out.println("Data Con perdida"); }
+			if (this.url == null | this.username == null | this.password == null) { LoadConData(); }
 			this.con = DriverManager.getConnection (this.url,this.username,this.password);
 			st = this.con.createStatement();
-			System.out.println("Coneccion sql exitosa"+con.getMetaData().getDatabaseProductName());
 			this.con.close();
 			return true;
 		}catch (Exception ex) {
