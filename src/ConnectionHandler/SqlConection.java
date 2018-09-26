@@ -32,7 +32,7 @@ public class SqlConection {
 		this.url = bufferedReader.readLine();
 		this.username = bufferedReader.readLine();
 		this.password = bufferedReader.readLine();
-		
+		if (!TestSqlCon()) { System.out.println("HEY"); }
 		bufferedReader.close();fileReader.close();
 		if (this.debug) {
 			System.out.println(this.url);
@@ -61,6 +61,7 @@ public class SqlConection {
 	
 	public void DescargarPersonas() throws SQLException, IOException {
 		CreateConnection();
+		
 		String sql = "Select * from "+dbPersonas;
 		ResultSet rs = preguntaSql(sql);
 		System.out.println("Query exitoso");
@@ -81,16 +82,17 @@ public class SqlConection {
 		CloseConnection();	writer.close();
 }
 	
-	public boolean TestSqlCon() throws IOException {
-		
+	public boolean TestSqlCon() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
+			if (this.url == null | this.username == null | this.password == null) { LoadConData();System.out.println("Data Con perdida"); }
 			this.con = DriverManager.getConnection (this.url,this.username,this.password);
-			st = this.con.createStatement();			
+			st = this.con.createStatement();
+			System.out.println("Coneccion sql exitosa"+con.getMetaData().getDatabaseProductName());
 			this.con.close();
-			System.out.println("Coneccion sql exitosa");
 			return true;
-		}catch (Exception Ex) {
+		}catch (Exception ex) {
+			met.ShowException(ex);
 			return false;
 		}
 
