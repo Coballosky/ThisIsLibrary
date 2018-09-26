@@ -90,5 +90,4 @@ public class Biblioteca {
 		return false;
 	}
 	
-	//public Usuario buscar
 }
