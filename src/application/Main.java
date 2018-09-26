@@ -62,7 +62,13 @@ public class Main extends Application {
 				met.ShowException(ex);
 			}
 		}else {
+			
 			System.out.println("No se encontro el archivo");
+			try {
+				SQL.DescargarPersonas();
+			} catch (SQLException | IOException ex) {
+				met.ShowException(ex);
+			}
 		}
 	}
 	
