@@ -14,8 +14,8 @@ public class Usuario extends Persona {
 		rentas = (ArrayList<Rental>) Collections.synchronizedList(new ArrayList<Rental>());
 	}
 	
-	public Usuario(String rut, String nombre, String apellido, String mail) {
-		super(rut,nombre,apellido);
+	public Usuario(String rut, String nombre, String apellido,char sexo, String mail) {
+		super(rut,nombre,apellido,sexo);
 		this.mail = mail;
 		rentas = (ArrayList<Rental>) Collections.synchronizedList(new ArrayList<Rental>());
 	}
@@ -28,8 +28,11 @@ public class Usuario extends Persona {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
-	public ArrayList<Rental> getRentas(){
-		return rentas;
+	public void setRentas(ArrayList<Rental> rentas) {
+		this.rentas = rentas;
 	}
+
+	
+	//Metodos
 	
 }
