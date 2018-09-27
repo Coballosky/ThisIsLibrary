@@ -97,6 +97,11 @@ public class Metodos {
 	/**           Exceptions  **/
 
 	public void ShowException(Exception ex) {
+/**
+ * @author Nicolas
+ * Ventana popup para facilitar el trace de los errores encontrados.
+ * TODO:  Terminar de modelarla para una mejor presentacion
+ */
 		Alert alert = new Alert(AlertType.ERROR);
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
