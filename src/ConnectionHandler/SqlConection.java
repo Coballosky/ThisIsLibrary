@@ -11,20 +11,26 @@ import Comun.Metodos;
 
 /**
  * @author Nicolas
- *	Esta clase fue pensada con un administrador de conecciones amigable en cuanto a los nombres
- *	un lugar unico en caso de requerir cambiar la direccion del sql clave y usuario
+ *	
  *
  **/
 
 
 public class SqlConection {
+	private boolean debug = true;
+	
 	Metodos met = new Metodos();
 	private String url,username,password;	
 	private Connection con;
 	public Statement st;
 	private String dbPersonas = "Persona";
-	private boolean debug = true;
-	private String path_Persona = "c://POO//Persona.txt";
+
+	
+	//
+	
+	String dbName = "POO";
+	
+	// -------------------------------------------------------------- //
 	
 	public void LoadConData() throws IOException {
 		System.out.println("Cargando sql data");
@@ -99,20 +105,17 @@ public class SqlConection {
 
 	}
 
-	
-
-	
 	public void DescargaData() {
 		try {
 			DescargarPersonas();
-			
-			
+
 			
 				/*
+				 * 
 				 * TODO: AGREGAR LAS DESCARGAS DE TODA LA DATA QUE OCUPARA EL PROGRAMA 
+				 * 
+				 * 
 				 */
-			
-			
 			
 			
 			} catch (SQLException | IOException ex) {
@@ -122,16 +125,113 @@ public class SqlConection {
 	}
 	
 	
-	public void CloseConnection() throws SQLException {
+	public int CheckDB() {
+		CreateConnection();
+		String db;
+		boolean dbFound = false;
+		
+		ResultSet dbs = preguntaSql("show databases");	
+		try {
+			while (dbs.next()) {
+				db = dbs.getString("Database");
+				if (db == dbName) { dbFound = true; }
+			}
+		} catch (SQLException ex) {
+			met.ShowException(ex);
+		}
+
+		if (dbFound) {
+			if (debug) { System.out.println("DB encontrada"); } 
+			return 1;
+		}else {
+			/*
+			 * Crea la la db en el sv sql
+			 */
+			if (debug) { System.out.println("DB no encontrada, Creando"); } 
+			
+			accionSql("create database "+dbName+";");
+			
+			accionSql("use "+dbName+";");
+			
+			accionSql("CREATE TABLE `Persona` (\r\n" + 
+					"	`ID` INT(3) UNSIGNED NOT NULL AUTO_INCREMENT,\r\n" + 
+					"	`Rut` INT(8) UNSIGNED NOT NULL,\r\n" + 
+					"	`NumVer` TINYTEXT NOT NULL,\r\n" + 
+					"	`Nombre` CHAR(50) NOT NULL,\r\n" + 
+					"	`Apellido` CHAR(50) NOT NULL,\r\n" + 
+					"	`Mail` CHAR(50) NULL DEFAULT NULL,\r\n" + 
+					"	`Sexo` CHAR(50) NULL DEFAULT NULL,\r\n" + 
+					"	`Direccion` CHAR(50) NULL DEFAULT NULL,\r\n" + 
+					"	PRIMARY KEY (`ID`),\r\n" + 
+					"	UNIQUE INDEX `Rut` (`Rut`),\r\n" + 
+					"	FULLTEXT INDEX `Nombre` (`Nombre`),\r\n" + 
+					"	FULLTEXT INDEX `Apellido` (`Apellido`),\r\n" + 
+					"	FULLTEXT INDEX `Sexo` (`Sexo`)\r\n" + 
+					")\r\n" + 
+					"COMMENT='Contiene la informacion de las personas'\r\n" + 
+					"COLLATE='utf8mb4_0900_ai_ci'\r\n" + 
+					"ENGINE=InnoDB\r\n" + 
+					"AUTO_INCREMENT=34;");
+			
+			accionSql("CREATE TABLE `Libros` (\r\n" + 
+					"	`ID` SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,\r\n" + 
+					"	`IDTexto` TINYTEXT NOT NULL,\r\n" + 
+					"	`Numero` INT(11) NULL DEFAULT NULL,\r\n" + 
+					"	`Titulo` TINYTEXT NULL,\r\n" + 
+					"	`Autor` TINYTEXT NULL,\r\n" + 
+					"	`Idioma` TINYTEXT NULL,\r\n" + 
+					"	`Estado` TINYTEXT NULL,\r\n" + 
+					"	`Rentado` TINYINT(3) UNSIGNED ZEROFILL NULL DEFAULT NULL,\r\n" + 
+					"	`Tema` TINYTEXT NULL,\r\n" + 
+					"	PRIMARY KEY (`ID`)\r\n" + 
+					")\r\n" + 
+					"COLLATE='utf8mb4_0900_ai_ci'\r\n" + 
+					"ENGINE=InnoDB"
+					+ ";");
+			
+			accionSql("CREATE TABLE `Usuarios` (\r\n" + 
+					"	`ID` INT(11) NOT NULL AUTO_INCREMENT,\r\n" + 
+					"	`User` CHAR(16) NOT NULL,\r\n" + 
+					"	`Password` CHAR(16) NOT NULL,\r\n" + 
+					"	`Rut` CHAR(8) NOT NULL,\r\n" + 
+					"	PRIMARY KEY (`ID`),\r\n" + 
+					"	UNIQUE INDEX `User` (`User`),\r\n" + 
+					"	FULLTEXT INDEX `Rut` (`Rut`)\r\n" + 
+					")\r\n" + 
+					"COLLATE='utf8mb4_0900_ai_ci'\r\n" + 
+					"ENGINE=InnoDB\r\n" + 
+					";");
+			CloseConnection();
+			return 2;
+		}
+		
+		
+		
+	}
+	
+	
+	public void CloseConnection() {
+		try {
 		this.con.close();
+		}catch (Exception ex) {
+			met.ShowException(ex);
+		}
 	}
-	
-	public ResultSet preguntaSql (String s) throws SQLException {
-			return st.executeQuery(s);
+	public ResultSet preguntaSql (String s) {
+		try {
+		return st.executeQuery(s);
+		}catch (Exception ex) {
+			met.ShowException(ex);
+			return null;
+		}
 	}
-	
-	public int accionSql (String s) throws SQLException {
-		return st.executeUpdate(s);		
+	public int accionSql (String s){
+		try {
+			return st.executeUpdate(s);
+		} catch (SQLException ex) {
+			met.ShowException(ex);
+			return 0;
+		}		
 	}
-	
 }
+
