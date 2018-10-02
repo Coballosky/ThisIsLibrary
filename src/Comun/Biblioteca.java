@@ -70,15 +70,11 @@ public class Biblioteca {
 	
 	public boolean eliminarLibro(String codTipo, int codNum) {	//Elimina libro especifico
 		String codigo = codTipo + Integer.toString(codNum);
-		ListIterator<Libro> iterador = libros.listIterator();
-		while(iterador.hasNext()) {
-			Libro libroItr = (Libro)iterador.next();
-			if(libroItr.getCode().equals(codigo)) {
-				iterador.remove();;
+		Libro buscado = buscarLibro(codTipo,codNum);
+			if(buscado != null && buscado.getCode().equals(codigo)) {
+				libros.remove(buscado);
 				return true;
 			}
-		}
-		
 		return false;
 	}
 	
@@ -90,4 +86,34 @@ public class Biblioteca {
 		return false;
 	}
 	
+	public Usuario buscarUsuario(String rutBuscado) {
+		ListIterator<Usuario> iterador = usuarios.listIterator();
+		while(iterador.hasNext()) {
+			Usuario usuarioItr = (Usuario)iterador.next();
+			if(usuarioItr.getRut().equals(rutBuscado)) {
+				return usuarioItr;
+			}
+			iterador.next();
+		}
+		return null;
+	}
+	
+	public boolean eliminarUsuario(String rutEliminar) {
+		Usuario buscado = buscarUsuario(rutEliminar);
+		if(buscado != null && buscado.getNombres().equals(rutEliminar)) {
+			usuarios.remove(buscado);
+			return true;
+		}
+		return false;
+	}
+	
+	public ArrayList<String> listaLibros(){
+		ArrayList<String> listLibros = new ArrayList<String>(libros.size());
+		ListIterator<Libro> itrLibros = libros.listIterator();
+		while(itrLibros.hasNext()) {
+			Libro actual = (Libro) itrLibros.next();
+			listLibros.add(actual.infoLibro());
+		}
+		return listLibros;
+	}
 }

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AddController">
+  <tabs>
+    <Tab text="Agregar 1">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="lbl_Nombre" layoutX="85.0" layoutY="58.0" />
+                  <TextField fx:id="lbl_Apellido" layoutX="378.0" layoutY="58.0" />
+                  <TextField fx:id="lbl_Rut" layoutX="378.0" layoutY="101.0" />
+                  <TextField fx:id="lbl_Mail" layoutX="92.0" layoutY="150.0" prefHeight="31.0" prefWidth="477.0" />
+                  <TextField fx:id="lbl_Direccion" layoutX="93.0" layoutY="193.0" prefHeight="31.0" prefWidth="474.0" />
+                  <Text layoutX="14.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre" />
+                  <Text layoutX="307.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Apellido" />
+                  <Text layoutX="307.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rut" />
+                  <Text layoutX="15.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Direccion" />
+                  <Text layoutX="14.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mail" />
+                  <Button layoutX="268.0" layoutY="305.0" mnemonicParsing="false" onAction="#AgregarPersona" text="Button" />
+                  <Pane layoutX="15.0" layoutY="107.0" prefHeight="21.0" prefWidth="292.0">
+                     <children>
+                        <RadioButton layoutX="109.0" mnemonicParsing="false" text="Mujer">
+                           <toggleGroup>
+                              <ToggleGroup fx:id="Sexo" />
+                           </toggleGroup>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" text="Hombre" toggleGroup="$Sexo" />
+                        <RadioButton layoutX="206.0" layoutY="-2.0" mnemonicParsing="false" text="N/A" toggleGroup="$Sexo" />
+                     </children>
+                  </Pane>
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Agregar 2">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="14.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Identificador Alfabetico" />
+                  <TextField fx:id="lbl_Id" alignment="CENTER" layoutX="207.0" layoutY="14.0" promptText="XXX" />
+                  <Text layoutX="28.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Titulo" />
+                  <TextField fx:id="lbl_Titulo" layoutX="77.0" layoutY="58.0" prefHeight="31.0" prefWidth="192.0" />
+                  <Text layoutX="300.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Autor" />
+                  <TextField fx:id="lbl_Autor" layoutX="364.0" layoutY="58.0" />
+                  <Text layoutX="23.0" layoutY="129.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Idioma" />
+                  <TextField fx:id="lbl_Idioma" layoutX="77.0" layoutY="108.0" prefHeight="31.0" prefWidth="191.0" />
+                  <Text layoutX="298.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estado" />
+                  <TextField fx:id="lbl_Estado" layoutX="364.0" layoutY="108.0" />
+                  <Text layoutX="26.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tema" />
+                  <Button layoutX="237.0" layoutY="308.0" mnemonicParsing="false" onAction="#AgregarLibro" text="Agregar" />
+                  <TextArea fx:id="lbl_Tema" layoutX="73.0" layoutY="154.0" prefHeight="134.0" prefWidth="481.0" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+      <Tab text="Agregar 3">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Text layoutX="133.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Coming soon!" wrappingWidth="334.673828125">
+                     <font>
+                        <Font size="47.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
+  </tabs>
+</TabPane>
