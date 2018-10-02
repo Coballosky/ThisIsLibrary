@@ -17,7 +17,7 @@ import Comun.Metodos;
 
 
 public class SqlConection {
-	private boolean debug = true;
+	private boolean debug = false;
 	
 	Metodos met = new Metodos();
 	private String url,username,password;	
@@ -144,65 +144,114 @@ public class SqlConection {
 			if (debug) { System.out.println("DB encontrada"); } 
 			return 1;
 		}else {
-			/*
-			 * Crea la la db en el sv sql
-			 */
 			if (debug) { System.out.println("DB no encontrada, Creando"); } 
 			
-			accionSql("create database "+dbName+";");
+			/**
+			  " -- MySQL Workbench Synchronization\r\n" + 
+					"-- Generated: 2018-09-29 17:38\r\n" + 
+					"-- Model: New Model\r\n" + 
+					"-- Version: 1.3\r\n" + 
+					"-- Project: Name of the project\r\n" + 
+					"-- Author: Nicolas\r\n" +  
+			 */
+		try {	
+			accionSql("SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;");
+			accionSql("SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;");
+			accionSql("SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';)";
+
+			accionSql("CREATE SCHEMA IF NOT EXISTS `" + dbName + "` DEFAULT CHARACTER SET utf8 ;"); 
+
+			accionSql("CREATE TABLE IF NOT EXISTS `" + dbName + "`.`Libro` (\r\n" + 
+					"  `idLibro` INT(11) NOT NULL,\r\n" + 
+					"  `idAlfaNumerico` VARCHAR(9) NOT NULL,\r\n" + 
+					"  `nombre` VARCHAR(45) NOT NULL,\r\n" + 
+					"  `autor` VARCHAR(45) NOT NULL,\r\n" + 
+					"  `tema` VARCHAR(45) NOT NULL,\r\n" + 
+					"  `tiempoPermitido` INT(11) NOT NULL,\r\n" + 
+					"  PRIMARY KEY (`idLibro`),\r\n" + 
+					"  UNIQUE INDEX `idAlfaNumerico_UNIQUE` (`idAlfaNumerico` ASC) VISIBLE)\r\n" + 
+					"ENGINE = InnoDB\r\n" + 
+					"DEFAULT CHARACTER SET = utf8;" );
 			
-			accionSql("use "+dbName+";");
+			accionSql("CREATE TABLE IF NOT EXISTS `" + dbName + "`.`Persona` (\r\n" + 
+					"  `rut` INT(10) UNSIGNED NOT NULL,\r\n" + 
+					"  `nombre` VARCHAR(45) NOT NULL,\r\n" + 
+					"  `apellido` VARCHAR(45) NOT NULL,\r\n" + 
+					"  `mail` VARCHAR(45) NOT NULL,\r\n" + 
+					"  `cargo` VARCHAR(45) NOT NULL,\r\n" + 
+					"  PRIMARY KEY (`rut`),\r\n" + 
+					"  UNIQUE INDEX `rut_UNIQUE` (`rut` ASC) VISIBLE)\r\n" + 
+					"ENGINE = InnoDB\r\n" + 
+					"DEFAULT CHARACTER SET = utf8;");
+				
+			accionSql("CREATE TABLE IF NOT EXISTS `" + dbName + "`.`Renta` (\r\n" + 
+					"  `idRenta` INT(11) NOT NULL AUTO_INCREMENT,\r\n" + 
+					"  `rutOperador` INT(10) UNSIGNED NOT NULL,\r\n" + 
+					"  `rutCliente` INT(11) NOT NULL,\r\n" + 
+					"  `ObjetoRenta` VARCHAR(9) NOT NULL,\r\n" + 
+					"  PRIMARY KEY (`idRenta`),\r\n" + 
+					"  UNIQUE INDEX `idRenta_UNIQUE` (`idRenta` ASC) VISIBLE,\r\n" + 
+					"  INDEX `fk_Renta_Persona_idx` (`rutOperador` ASC) VISIBLE,\r\n" + 
+					"  INDEX `fk_Renta_Libro1_idx` (`ObjetoRenta` ASC) VISIBLE,\r\n" + 
+					"  CONSTRAINT `fk_Renta_Persona`\r\n" + 
+					"    FOREIGN KEY (`rutOperador`)\r\n" + 
+					"    REFERENCES `" + dbName + "`.`Persona` (`rut`)\r\n" + 
+					"    ON DELETE NO ACTION\r\n" + 
+					"    ON UPDATE NO ACTION,\r\n" + 
+					"  CONSTRAINT `fk_Renta_Libro1`\r\n" + 
+					"    FOREIGN KEY (`ObjetoRenta`)\r\n" + 
+					"    REFERENCES `" + dbName + "`.`Libro` (`idAlfaNumerico`)\r\n" + 
+					"    ON DELETE NO ACTION\r\n" + 
+					"    ON UPDATE NO ACTION,\r\n" + 
+					"  CONSTRAINT `fk_Renta_Insumo1`\r\n" + 
+					"    FOREIGN KEY (`ObjetoRenta`)\r\n" + 
+					"    REFERENCES `" + dbName + "`.`Insumo` (`idAlfaNumerico`)\r\n" + 
+					"    ON DELETE NO ACTION\r\n" + 
+					"    ON UPDATE NO ACTION)\r\n" + 
+					"ENGINE = InnoDB\r\n" + 
+					"DEFAULT CHARACTER SET = utf8;");
+					
+			accionSql("CREATE TABLE IF NOT EXISTS `" + dbName + "`.`Insumo` (\r\n" + 
+					"  `idInsumo` INT(11) NOT NULL,\r\n" + 
+					"  `idAlfaNumerico` VARCHAR(9) NOT NULL,\r\n" + 
+					"  `nombre` VARCHAR(45) NOT NULL,\r\n" + 
+					"  `modelo` VARCHAR(45) NOT NULL,\r\n" + 
+					"  `tiempoPermitido` INT(11) NOT NULL,\r\n" + 
+					"  PRIMARY KEY (`idInsumo`),\r\n" + 
+					"  UNIQUE INDEX `idAlfaNumerico_UNIQUE` (`idAlfaNumerico` ASC) VISIBLE)\r\n" + 
+					"ENGINE = InnoDB\r\n" + 
+					"DEFAULT CHARACTER SET = utf8;");
+					
+			accionSql("CREATE TABLE IF NOT EXISTS `"+ dbName +"`.`Estudiante` (\r\n" + 
+					"  `rut` INT(10) UNSIGNED NOT NULL,\r\n" + 
+					"  `nombre` VARCHAR(45) NULL DEFAULT NULL,\r\n" + 
+					"  `apellido` VARCHAR(45) NULL DEFAULT NULL,\r\n" + 
+					"  `mail` VARCHAR(45) NULL DEFAULT NULL,\r\n" + 
+					"  PRIMARY KEY (`rut`),\r\n" + 
+					"  UNIQUE INDEX `rut_UNIQUE` (`rut` ASC) VISIBLE)\r\n" + 
+					"ENGINE = InnoDB\r\n" + 
+					"DEFAULT CHARACTER SET = utf8;");
 			
-			accionSql("CREATE TABLE `Persona` (\r\n" + 
-					"	`ID` INT(3) UNSIGNED NOT NULL AUTO_INCREMENT,\r\n" + 
-					"	`Rut` INT(8) UNSIGNED NOT NULL,\r\n" + 
-					"	`NumVer` TINYTEXT NOT NULL,\r\n" + 
-					"	`Nombre` CHAR(50) NOT NULL,\r\n" + 
-					"	`Apellido` CHAR(50) NOT NULL,\r\n" + 
-					"	`Mail` CHAR(50) NULL DEFAULT NULL,\r\n" + 
-					"	`Sexo` CHAR(50) NULL DEFAULT NULL,\r\n" + 
-					"	`Direccion` CHAR(50) NULL DEFAULT NULL,\r\n" + 
-					"	PRIMARY KEY (`ID`),\r\n" + 
-					"	UNIQUE INDEX `Rut` (`Rut`),\r\n" + 
-					"	FULLTEXT INDEX `Nombre` (`Nombre`),\r\n" + 
-					"	FULLTEXT INDEX `Apellido` (`Apellido`),\r\n" + 
-					"	FULLTEXT INDEX `Sexo` (`Sexo`)\r\n" + 
-					")\r\n" + 
-					"COMMENT='Contiene la informacion de las personas'\r\n" + 
-					"COLLATE='utf8mb4_0900_ai_ci'\r\n" + 
-					"ENGINE=InnoDB\r\n" + 
-					"AUTO_INCREMENT=34;");
+			accionSql("CREATE TABLE IF NOT EXISTS `" + dbName + "`.`DataLogin` (\r\n" + 
+					"  `Persona_rut` INT(10) UNSIGNED NOT NULL,\r\n" + 
+					"  `Password` VARCHAR(45) NOT NULL,\r\n" + 
+					"  INDEX `fk_DataLogin_Persona1_idx` (`Persona_rut` ASC) VISIBLE,\r\n" + 
+					"  CONSTRAINT `fk_DataLogin_Persona1`\r\n" + 
+					"    FOREIGN KEY (`Persona_rut`)\r\n" + 
+					"    REFERENCES `" + dbName + "`.`Persona` (`rut`)\r\n" + 
+					"    ON DELETE NO ACTION\r\n" + 
+					"    ON UPDATE NO ACTION)\r\n" + 
+					"ENGINE = InnoDB\r\n" + 
+					"DEFAULT CHARACTER SET = utf8;\r\n");
 			
-			accionSql("CREATE TABLE `Libros` (\r\n" + 
-					"	`ID` SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,\r\n" + 
-					"	`IDTexto` TINYTEXT NOT NULL,\r\n" + 
-					"	`Numero` INT(11) NULL DEFAULT NULL,\r\n" + 
-					"	`Titulo` TINYTEXT NULL,\r\n" + 
-					"	`Autor` TINYTEXT NULL,\r\n" + 
-					"	`Idioma` TINYTEXT NULL,\r\n" + 
-					"	`Estado` TINYTEXT NULL,\r\n" + 
-					"	`Rentado` TINYINT(3) UNSIGNED ZEROFILL NULL DEFAULT NULL,\r\n" + 
-					"	`Tema` TINYTEXT NULL,\r\n" + 
-					"	PRIMARY KEY (`ID`)\r\n" + 
-					")\r\n" + 
-					"COLLATE='utf8mb4_0900_ai_ci'\r\n" + 
-					"ENGINE=InnoDB"
-					+ ";");
+			accionSql("SET SQL_MODE=@OLD_SQL_MODE;);
+			accionSql("SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;");
+			accionSql("SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;");
 			
-			accionSql("CREATE TABLE `Usuarios` (\r\n" + 
-					"	`ID` INT(11) NOT NULL AUTO_INCREMENT,\r\n" + 
-					"	`User` CHAR(16) NOT NULL,\r\n" + 
-					"	`Password` CHAR(16) NOT NULL,\r\n" + 
-					"	`Rut` CHAR(8) NOT NULL,\r\n" + 
-					"	PRIMARY KEY (`ID`),\r\n" + 
-					"	UNIQUE INDEX `User` (`User`),\r\n" + 
-					"	FULLTEXT INDEX `Rut` (`Rut`)\r\n" + 
-					")\r\n" + 
-					"COLLATE='utf8mb4_0900_ai_ci'\r\n" + 
-					"ENGINE=InnoDB\r\n" + 
-					";");
-			CloseConnection();
 			return 2;
+		}catch (Exception ex) {
+			
+		}
 		}
 		
 		
