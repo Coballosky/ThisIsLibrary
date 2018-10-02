@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.RentasyDevoluciones">
+  <tabs>
+    <Tab text="Libros e Insumos">
+         <content>
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Rentar Libro">
+                     <content>
+                        <Pane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <TextField fx:id="lbl_IdLibro" alignment="CENTER" layoutX="231.0" layoutY="32.0" promptText="XXX - NNN" />
+                              <TextField fx:id="lbl_RutRenta" alignment="CENTER" layoutX="231.0" layoutY="79.0" promptText="12345678-X" />
+                              <Text layoutX="21.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Identificador unico Libro" />
+                              <Text layoutX="101.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rut Alumno" />
+                              <Button fx:id="VerificarAlumno" layoutX="461.0" layoutY="80.0" mnemonicParsing="false" text="Verificar" />
+                              <Button layoutX="268.0" layoutY="263.0" mnemonicParsing="false" onAction="#RentarLibro" text="Button" />
+                           </children>
+                        </Pane>
+                     </content>
+                  </Tab>
+                <Tab text="Retornar Libro">
+                     <content>
+                        <Pane prefHeight="200.0" prefWidth="200.0">
+                        <children>
+                              <TextField fx:id="lbl_IULRetorno" alignment="CENTER" layoutX="231.0" layoutY="32.0" promptText="XXX - NNN" />
+                              <TextField fx:id="lbl_RutRetorno" alignment="CENTER" layoutX="231.0" layoutY="79.0" promptText="12345678-X" />
+                              <Text layoutX="21.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Identificador unico Libro" />
+                              <Text layoutX="101.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rut Alumno" />
+                              <Button layoutX="268.0" layoutY="263.0" mnemonicParsing="false" onAction="#RetornarLibro" text="Button" />
+                           </children>
+                        </Pane>
+                     </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+         </content></Tab>
+      <Tab text="Rentar Cubiculo" />
+  </tabs>
+</TabPane>
