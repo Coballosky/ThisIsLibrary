@@ -1,15 +1,16 @@
 package Comun;
 
 import java.io.*;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.layout.GridPane;
 
 public class Metodos {
+	private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	//DirAndPaths dir = new DirAndPaths();
+	
 	public boolean validarRut(String vrut, String vverificador) 
-    { 
+    {
         boolean flag = false; 
         String rut = vrut.trim(); 
 
@@ -65,13 +66,40 @@ public class Metodos {
 		}
 	}
 	
+public void ConLOG(String...s) {
+	boolean appendmode = false;
+	String linea="";
+	if (!(new File("c://POO").exists())) { 		// dir.getPathProgram()).exists()
+	}else {
+		try {
+		File file = new File("c://POO//Log.txt"); //dir.getPathLog()
+		if (file.exists()) {appendmode = true;}
+		FileWriter fr = new FileWriter(file,appendmode);
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+		
+		
+		if( !s[0].equals("") ) { String timeS = sdf.format(timestamp);
+		linea = linea+  timeS+" | ";}
+		for (int i = 0;i<s.length;i++) {
+			linea = linea+s[i];
+		}
+		fr.write(linea+"\r\n");
+		System.out.println(linea);
+		
+		fr.close();
+		}catch(Exception ex) {
+			System.out.println("Error en Metodos");
+			ex.printStackTrace();
+		}
+	}
 	
+}
 /**    ---------------------------------------------------------------------------------          **/
 	
 	
-	public void GuardarSqlConData(String...data)    throws IOException {
+	public void GuardarSqlConData(String...data)  {
 		
-		File file = new File("c://POO//SqlData.txt");
+		File file = new File("c://POO//SqlData.txt");		//dir.getPathSql()
 		
         FileWriter fr = null;
         try {
@@ -83,38 +111,12 @@ public class Metodos {
         } catch (Exception e) {
             System.out.println(e);
         }finally{
-            //close resources
             try {
                 fr.close();
             } catch (IOException e) {
             	System.out.println(e);
             }
         }
-	}
-
-	
-	
-	/**           Exceptions  **/
-
-	public void ShowException(Exception ex) {
-/**
- * @author Nicolas
- * Ventana popup para facilitar el trace de los errores encontrados.
- * TODO:  Terminar de modelarla para una mejor presentacion
- */
-		Alert alert = new Alert(AlertType.ERROR);
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-		ex.printStackTrace(pw);
-		Label Excep = new Label();
-		String exception = sw.toString();
-        Excep.setText(exception);
-        GridPane expContent = new GridPane();
-        expContent.add ( Excep ,0 , 0);
-        alert.getDialogPane().setExpandableContent(expContent);	        
-        alert.setTitle("Exception Dialog"); 	
-		alert.showAndWait();
-	}
-	
+	}	
 	
 }

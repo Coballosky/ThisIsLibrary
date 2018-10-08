@@ -13,7 +13,7 @@ public class getBook {
 	
 	public ResultSet ConsultaIdText(String idText) {
 		try {
-		Con.CreateConnection();
+		Con.CreateConnection(null);
 		ResultSet rs = Con.preguntaSql("select * from "+Tabla+" where "+columna+" LIKE '%"+idText+"%';");
 		Con.CloseConnection();
 		
@@ -26,7 +26,7 @@ public class getBook {
 	
 	public ResultSet ConsultaTema(String texto_Tema) {
 		try {
-			Con.CreateConnection();
+			Con.CreateConnection(null);
 			ResultSet rs = Con.preguntaSql("select * from "+Tabla+" where "+columna+" LIKE '%"+texto_Tema+"%';");
 			Con.CloseConnection();
 			
@@ -38,7 +38,7 @@ public class getBook {
 	}
 	public ResultSet ConsultaTitulo(String texto_Titulo) {
 		try {
-			Con.CreateConnection();
+			Con.CreateConnection(null);
 			ResultSet rs = Con.preguntaSql("select * from "+Tabla+" where "+columna+" LIKE '%"+texto_Titulo+"%';");
 			Con.CloseConnection();
 			
@@ -50,7 +50,7 @@ public class getBook {
 	}
 	public ResultSet ConsultaAutor(String texto_Autor) {
 		try {
-			Con.CreateConnection();
+			Con.CreateConnection(null);
 			ResultSet rs = Con.preguntaSql("select * from "+Tabla+" where "+columna+" LIKE '%"+texto_Autor+"%';");
 			Con.CloseConnection();
 			

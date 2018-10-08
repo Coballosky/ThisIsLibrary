@@ -13,7 +13,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import Comun.Metodos;
+import ConnectionHandler.SqlConection;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -28,6 +31,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Button;
 
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
 
@@ -43,23 +47,48 @@ public class MainController implements Initializable{
 
 	Main command = new Main();
 
-	public void Login(ActionEvent event)  {
+	public void Login(ActionEvent event) throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(getClass().getResource("/Views/Main.fxml"));
+		command.closeLogin((Stage)txtID.getScene().getWindow());
+		Stage stage = new Stage();
+		Scene scene = new Scene(loader.load());
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		stage.setScene(scene);
+		stage.show();
 		
-		if(txtID.getText().equals("user") && txtPass.getText().equals("pass")) {
+		MenuController menu = loader.getController();
+		menu.initialize();
+	}
+	
+	public void login(ActionEvent event)  {
+		
+			SqlConection sql = new SqlConection();
 			
-			try {
-			Parent root = FXMLLoader.load(getClass().getResource("/Views/Main.fxml"));
-			command.closeLogin((Stage)txtID.getScene().getWindow());
-			Stage stage = new Stage();
-			stage.setResizable(false);
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			stage.setScene(scene);
-			stage.show();
-			}catch (Exception Ex) {
-				System.out.println(Ex);
+		try {
+			if(sql.LookUser(txtID.getText(),txtPass.getText())) {
+				
+				try {
+				Parent root = FXMLLoader.load(getClass().getResource("/Views/Main.fxml"));
+				command.closeLogin((Stage)txtID.getScene().getWindow());
+				Stage stage = new Stage();
+				stage.setResizable(false);
+				Scene scene = new Scene(root);
+				scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				stage.setScene(scene);
+				stage.show();
+				
+				}catch (Exception Ex) {
+					System.out.println(Ex);
+				}
 			}
-			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		}
 		
 	public void SQLSetup(ActionEvent event) throws Exception {
@@ -142,8 +171,7 @@ public class MainController implements Initializable{
 		    Txt_DB.setText(result.get());
 		}
 		
-		// The Java 8 way to get the response value (with lambda expression).
-		//result.ifPresent(letter -> System.out.println("Your choice: " + letter));
+
 	}
 	
 	public void SqlGuardar() throws IOException {
@@ -155,10 +183,10 @@ public class MainController implements Initializable{
 		String db = Txt_DB.getText();
 		String url = "jdbc:mysql://"+IP+":"+port+"/"+db+"?&characterEncoding=UTF-8";
 		if (this.estadoTest) {
-		Guardado.GuardarSqlConData(url,user,pass);
+		Guardado.GuardarSqlConData(url,user,pass,db);
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Se han guardado los datos");
-		alert.setHeaderText("Exelente has completado el primer paso !");
+		alert.setHeaderText("Excelente has completado el primer paso !");
 		alert.showAndWait();
 		Stage stage = (Stage) btn_Guardar.getScene().getWindow();
 	    stage.close();
@@ -166,7 +194,7 @@ public class MainController implements Initializable{
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Error");
 			alert.setHeaderText("Hubo un error con respecto a la SQL");
-			alert.setContentText("Porfavor asegurate que la conneccion haya sido exitosa para continuar  "
+			alert.setContentText("Porfavor asegurate que la coneccion haya sido exitosa para continuar  "
 					+ "Si no tienes los datos ahora podras ingresarlos mas tarde");
 			alert.showAndWait();
 		}
@@ -175,7 +203,7 @@ public class MainController implements Initializable{
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }
