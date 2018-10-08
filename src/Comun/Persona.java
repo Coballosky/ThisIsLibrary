@@ -50,7 +50,7 @@ public class Persona {
 	
 	//Metodos
 	public String infoPersona() {
-		String info = "RUT: " + getRut() + "\nNombre: " + getNombres() + " " + getApellidos() + " [" 
+		String info = getRut() + " " +  getNombres() + " " + getApellidos() + "[" 
 				+ getSexo() + "]";
 		
 		return info;

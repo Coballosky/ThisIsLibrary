@@ -7,10 +7,10 @@ import javafx.scene.Scene;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 
+import Exception.ExHandler;
+import Comun.Setup;
 import Comun.Metodos;
-import ConnectionHandler.SqlConection;
 
 /**
  * 
@@ -25,13 +25,25 @@ import ConnectionHandler.SqlConection;
  */
 
 public class Main extends Application {
-	private String path = "c://POO//SqlData.txt" ,path_Persona = "c://POO//Persona.txt";
+	private boolean debug = true;
 	Metodos met = new Metodos();
-	
 	@Override
-	public void start(Stage primaryStage) throws IOException, SQLException {
-		SetupSQL();			// se verifica que se hayan ingresado los datos de la sql anteriormente, sino se piden
-		DescargaSQL();		// se descarga la base de datos para hacer uso de archivos ( requerimiento entrega 1 )
+	public void start(Stage primaryStage) {
+		startUp();
+		
+		
+		try {
+			Setup set = new Setup();
+			set.CheckSetup();				//Se revisan las carpetas del programa y sus archivos
+			set.DescargaSQL();			// se descarga la base de datos para hacer uso de archivos ( requerimiento entrega 1 ).
+		} catch (Exception e) {
+			met.ConLOG("IN Main : error upon trying to setup");
+			e.printStackTrace();
+			
+		}finally { met.ConLOG("Setup ended"); }
+	
+
+		ExHandler ExH = new ExHandler();
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("/Views/Login.fxml"));
 			Scene scene = new Scene(root);
@@ -39,7 +51,8 @@ public class Main extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			} catch(Exception ex) {
-				met.ShowException(ex);
+				met.ConLOG("Error en main al iniciar la ventana");
+				ExH.ShowException(ex);
 			}
 	}
 	
@@ -47,45 +60,40 @@ public class Main extends Application {
 		primaryStage.close();
 	}
 	
-	public static void main(String[] args) {
-		launch(args);
+	private void startUp() {
+		met.ConLOG("");
+		met.ConLOG("----------------- Iniciando Programa ---------------------- ");
+		met.ConLOG("");
+		Setup();
 	}
 	
-	
-	public void DescargaSQL() {
-		SqlConection SQL = new SqlConection();
-		File Per = new File(this.path_Persona);
-		if (Per.exists() ) {
-			try {
-				SQL.DescargarPersonas();
-			} catch (SQLException | IOException ex) {
-				met.ShowException(ex);
-			}
-		}else {
-			
-			System.out.println("No se encontro el archivo");
-			try {
-				SQL.DescargarPersonas();
-			} catch (SQLException | IOException ex) {
-				met.ShowException(ex);
-			}
+	private void Setup()  {
+		boolean j = false ;
+		if (debug) {met.ConLOG("IN Setup / Main : starting");}
+		File carpetaRoot = new File("c://POO");
+		if (!carpetaRoot.exists()) {
+		try {
+		j= new File("c://POO").mkdir();
+		}catch(Exception ex) {
+			if (debug) {	met.ConLOG("IN Setup / SetupCarpeta : Error Crear Carpeta");	}
+			ex.printStackTrace();
 		}
-	}
-	
-	
-	public void SetupSQL() {
-		File tmpDir = new File(this.path);
-		if (!tmpDir.exists()) {
-			try {
-				Stage ventanaSQL = new Stage();
-				Parent sql = FXMLLoader.load(getClass().getResource("/Views/ConfigSQL.fxml"));
-				Scene escena = new Scene(sql);
-				escena.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-				ventanaSQL.setScene(escena);
-				ventanaSQL.showAndWait();
-				}catch(Exception ex) {
-				  met.ShowException(ex);
+		if (j) {
+			met.ConLOG("IN Setup / SetupCarpeta : Carpeta creada");
+				try {
+					File sqlData = 		new File("c://POO//SqlData.txt"	);	sqlData.createNewFile();
+					File Log =		 	new File("c://POO//Log.txt"		);		Log.createNewFile();
+					File Personas = 	new File("c://POO//Persona.txt"	);		Personas.createNewFile();
+				} catch (IOException e) {
+					met.ConLOG("Error in main!");
+					e.printStackTrace();
 				}
+			
+			}
 		}
+		if (debug) {met.ConLOG("IN Setup / Main : Ending");}
+
 	}
+	
+
 }

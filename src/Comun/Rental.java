@@ -1,28 +1,32 @@
 package Comun;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 public class Rental {
 	private Libro libro;
 	private String rutAsociado;
-	private int diasRenta;
+	private ZonedDateTime fechaRenta;
 	
 	//Constructores
 	public Rental(Libro libro) {
 		this.libro = libro;
 		rutAsociado = null;
-		diasRenta = 0;
+		fechaRenta = null;
 	}
 	public Rental(Libro libro,String rut) {
 		this.libro = libro;
 		rutAsociado = rut;
-		diasRenta = 0;
+		fechaRenta = Instant.now().atZone(ZoneId.of("America/Santiago"));
 	}
 	
 	//Getter & Setter
-	public int getDiasRenta() {
-		return diasRenta;
+	public ZonedDateTime getFechaRenta() {
+		return fechaRenta;
 	}
-	public void setDiasRenta(int dias) {
-		this.diasRenta = dias;
+	public void setFechaRenta(ZonedDateTime fecha) {
+		this.fechaRenta = fecha;
 	}
 	public Libro getLibro() {
 		return libro;
@@ -36,4 +40,8 @@ public class Rental {
 	public void setRut(String rut) {
 		this.rutAsociado = rut;
 	}
+	
+	//Metodos
+	
+	
 }

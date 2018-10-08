@@ -7,9 +7,9 @@ public class Libro {
 	private String titulo;
 	private String autor;
 	private String tema;
-	private String idioma;
 	private String estado;
 	private boolean rentado;
+	private int diasPermitidos;
 	
 	//Constructores
 	public Libro(String codigo) {
@@ -17,20 +17,20 @@ public class Libro {
 		titulo = null;
 		autor = null;
 		tema = null;
-		idioma = null;
 		estado = null;
 		rentado = false;
+		diasPermitidos = 0;
 	}
 	/*Necesita tener un codigo valido y especifico para no generar problemas al ser variable final*/
 	
-	public Libro(String codigo, String nombreLibro, String autor, String tema, String idioma, String estado) {
+	public Libro(String codigo, String nombreLibro, String autor, String tema, String estado, int diasPermitidos) {
 		this.codigoLibro = codigo;
 		this.titulo = nombreLibro;
 		this.autor = autor;
-		this.idioma = idioma;
 		this.tema = tema;
 		this.estado = estado;
 		this.rentado = false;
+		this.diasPermitidos = diasPermitidos;
 	}
 	
 	//Getter & Setter
@@ -58,12 +58,6 @@ public class Libro {
 	public void setAutor(String autor) {
 		this.autor = autor;
 	}
-	public String getIdioma() {
-		return idioma;
-	}
-	public void setIdioma(String idioma) {
-		this.idioma = idioma;
-	}
 	public String getEstado() {
 		return estado;
 	}
@@ -76,11 +70,17 @@ public class Libro {
 	public void setRentado(boolean rentado) {
 		this.rentado = rentado;
 	}
+	public int getDias() {
+		return diasPermitidos;
+	}
+	public void setDias(int diasPermitidos) {
+		this.diasPermitidos = diasPermitidos;
+	}
 	
 	//Metodos
 	public String infoLibro() {
-		String info = getTema() + " " + getCode() + "|" + getTitulo() + ", " + getAutor() + "\n\tIdioma: " 
-				+ getIdioma() + ", Estado: " + getEstado() + ", Rentado: ";
+		String info = "Tema: " + getTema() + "\n" + getCode() + " | " + getTitulo() + "\nAutor: " + getAutor() + 
+				"\nDias de Renta Permitidos: " + getDias() + "\nEstado: " + getEstado() + "\nRentado: ";
 		
 		if(getRentado() == true) {
 			info = info + "SI";
@@ -89,29 +89,30 @@ public class Libro {
 			info = info + "NO";
 		}
 		
+		info += "\n";
 		return info;
 	}
 	
 	public void mostrarInfo(TextArea texto) {
-		texto.appendText(infoLibro()+"\n\n");
+		texto.appendText(infoLibro()+"\n");
 	}
 	
 	//Metodos de modificacion
 	public void modificarLibro(String campo, Object dato) {
-		if(campo.equals("titulo")) {
-			this.setTitulo((String)dato);
+		if(campo.equalsIgnoreCase("titulo")) {
+			this.setTitulo((String) dato);
 		}
-		else if(campo.equals("autor")) {
-			this.setAutor((String)dato);
+		else if(campo.equalsIgnoreCase("autor")) {
+			this.setAutor((String) dato);
 		}
-		else if(campo.equals("tema")) {
-			this.setTema((String)dato);
+		else if(campo.equalsIgnoreCase("estado")) {
+			this.setEstado((String) dato);
 		}
-		else if(campo.equals("estado")) {
-			this.setEstado((String)dato);
+		else if(campo.equalsIgnoreCase("rentado")) {
+			this.setRentado((Boolean) dato);
 		}
-		else if(campo.equals("rentado")) {
-			this.setRentado((boolean) dato);
+		else if(campo.equalsIgnoreCase("dias")) {
+			this.setDias((Integer) dato);
 		}
 	}
 	
